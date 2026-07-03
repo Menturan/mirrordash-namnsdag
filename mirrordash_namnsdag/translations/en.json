@@ -1,0 +1,7 @@
+{
+    "title": "Name Day",
+    "todays_names": "Today's Name Day",
+    "no_names": "No name day today",
+    "error_fetching": "Could not fetch name day",
+    "last_checked": "Last checked"
+}

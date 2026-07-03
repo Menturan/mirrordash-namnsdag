@@ -1,0 +1,81 @@
+<div class="namnsdag-container">
+    {% if show_header and translations and translations.title %}
+    <h2 class="module-header" style="margin-bottom: 5px;">{{ translations.get("title", "Name Day") }}</h2>
+    {% endif %}
+    
+    <div class="namnsdag-body">
+        {% if error %}
+            <span class="namnsdag-error">{{ translations.get("error_fetching", "Could not fetch name day") }}</span>
+        {% elif names and names|length > 0 %}
+            <div class="namnsdag-names">
+                {% for name in names %}
+                    <span class="namnsdag-name">{{ name }}</span>{% if not loop.last %}<span class="namnsdag-separator"> & </span>{% endif %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <span class="namnsdag-none">{{ translations.get("no_names", "No name day today") }}</span>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.namnsdag-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Align dynamically based on parent region containers */
+#top_right .namnsdag-container,
+#bottom_right .namnsdag-container {
+    align-items: flex-end;
+    text-align: right;
+}
+
+#top_left .namnsdag-container,
+#bottom_left .namnsdag-container {
+    align-items: flex-start;
+    text-align: left;
+}
+
+.namnsdag-body {
+    margin-top: 4px;
+}
+
+.namnsdag-names {
+    font-size: 28px;
+    font-weight: 200;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    color: var(--color-high-contrast, #ffffff);
+    animation: namnsdagFadeIn 0.8s ease-out;
+}
+
+.namnsdag-name {
+    font-weight: 300;
+    background: linear-gradient(135deg, var(--color-high-contrast, #ffffff) 40%, color-mix(in srgb, var(--color-high-contrast, #ffffff) 70%, transparent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.namnsdag-separator {
+    color: var(--color-standard-gray, #999999);
+    font-weight: 100;
+}
+
+.namnsdag-none, .namnsdag-error {
+    font-size: 16px;
+    color: var(--color-dimmed-charcoal, #666666);
+    font-style: italic;
+}
+
+.namnsdag-error {
+    color: var(--color-error, #ffb4ab);
+}
+
+@keyframes namnsdagFadeIn {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+}
+</style>
