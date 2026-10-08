@@ -4,24 +4,11 @@
   "description": "Displays the current name of the day in Sweden.",
   "type": "object",
   "properties": {
-    "enabled": {
-      "type": "boolean",
-      "default": true,
-      "title": "Enabled",
-      "description": "Enable or disable this module."
-    },
-    "position": {
-      "type": "string",
-      "default": "middle_center",
-      "enum": ["top_left", "top_right", "middle_center", "bottom_left", "bottom_right"],
-      "title": "Screen Position",
-      "description": "Where to display this module on the mirror screen."
-    },
     "interval": {
       "type": "integer",
-      "default": 30,
+      "default": 60,
       "title": "Update Interval (Seconds)",
-      "description": "Time to wait between data refreshes."
+      "description": "How often to check for a new day. The names are fetched once a day."
     },
     "show_header": {
       "type": "boolean",
@@ -30,5 +17,5 @@
       "description": "Show or hide the module's header/title."
     }
   },
-  "required": ["enabled", "position", "interval", "show_header"]
+  "required": ["interval", "show_header"]
 }

@@ -2,15 +2,21 @@
 name = "mirrordash-namnsdag"
 version = "0.1.0"
 description = "Swedish Name Day widget"
+requires-python = ">=3.14"
 authors = [
     { name = "Menturan" }
 ]
-dependencies = [
-    "jinja2"
-]
+# The mirror provides the rest (rendering, fetch_json, translations); add only what plugin.py imports
+dependencies = []
 
 [project.entry-points."mirrordash.modules"]
 mirrordash_namnsdag = "mirrordash_namnsdag.plugin:NamnsdagModule"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+]
 
 [build-system]
 requires = ["hatchling"]

@@ -2,41 +2,29 @@
     {% if show_header and translations and translations.title %}
     <h2 class="module-header"><i data-lucide="award" style="width: 14px; height: 14px; stroke-width: 2px; vertical-align: middle; margin-right: 4px;"></i>{{ translations.get("title", "Name Day") }}</h2>
     {% endif %}
-    
+
     <div class="namnsdag-body">
         {% if error %}
-            <span class="namnsdag-error">{{ translations.get("error_fetching", "Could not fetch name day") }}</span>
-        {% elif names and names|length > 0 %}
+            <div class="module-message"><i data-lucide="cloud-off"></i><span>{{ translations.get("error_fetching", "Could not fetch name day") }}</span></div>
+        {% elif names %}
             <div class="namnsdag-names">
                 {% for name in names %}
                     <span class="namnsdag-name">{{ name }}</span>{% if not loop.last %}<span class="namnsdag-separator"> & </span>{% endif %}
                 {% endfor %}
             </div>
         {% else %}
-            <span class="namnsdag-none">{{ translations.get("no_names", "No name day today") }}</span>
+            <div class="module-message"><i data-lucide="calendar-x"></i><span>{{ translations.get("no_names", "No name day today") }}</span></div>
         {% endif %}
     </div>
 </div>
 
+<!-- Headers and messages come from modules.css; only the names' own look is here -->
 <style>
 .namnsdag-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-}
-
-/* Align dynamically based on parent region containers */
-#top_right .namnsdag-container,
-#bottom_right .namnsdag-container {
-    align-items: flex-end;
-    text-align: right;
-}
-
-#top_left .namnsdag-container,
-#bottom_left .namnsdag-container {
-    align-items: flex-start;
-    text-align: left;
 }
 
 .namnsdag-body {
@@ -62,16 +50,6 @@
 .namnsdag-separator {
     color: var(--color-standard-gray, #999999);
     font-weight: 100;
-}
-
-.namnsdag-none, .namnsdag-error {
-    font-size: 16px;
-    color: var(--color-dimmed-charcoal, #666666);
-    font-style: italic;
-}
-
-.namnsdag-error {
-    color: var(--color-error, #ffb4ab);
 }
 
 @keyframes namnsdagFadeIn {
