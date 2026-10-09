@@ -30,7 +30,7 @@ class NamnsdagModule:
     async def fetch_names(self, day: date) -> list[str] | None:
         """The names for that day, or None when neither service answered."""
         for base in URLS:
-            data, error = await self.fetch_json(base + day.strftime("%Y/%m/%d"))
+            data, error = await self.fetch_json(base + day.strftime("%Y/%m/%d"), max_age=86400)  # a day's names never change
             if data is not None:
                 return names_from(data)
             logger.debug(f"{base}: {error}")

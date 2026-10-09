@@ -17,7 +17,7 @@ def module(*answers):
 def test_names_for_the_day_in_the_address():
     m = module((DAY, None))
     assert asyncio.run(m.fetch_names(date(2026, 10, 8))) == ["Nils"]
-    m.fetch_json.assert_awaited_once_with(URLS[0] + "2026/10/08")
+    m.fetch_json.assert_awaited_once_with(URLS[0] + "2026/10/08", max_age=86400)
 
 
 def test_second_service_when_the_first_is_down():
