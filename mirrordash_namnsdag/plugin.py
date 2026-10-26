@@ -1,12 +1,24 @@
 import asyncio
+import json
 import logging
 from datetime import date
 
 logger = logging.getLogger("mirrordash.modules.mirrordash_namnsdag")
 
-# Two services with the same API; the second is tried when the first doesn't answer.
-# The date is in the address, so an answer the mirror kept from earlier is always today's.
-URLS = ("https://api.dryg.net/dagar/v2.1/", "https://sholiday.faboul.se/dagar/v2.1/")
+# Two services with the same API; the second is tried when the first doesn't answer (api.dryg.net
+# has answered Cloudflare's error 1014 since October 2026). The date is in the address, so an answer
+# the mirror kept from earlier is always today's.
+URLS = ("https://sholiday.faboul.se/dagar/v2.1/", "https://api.dryg.net/dagar/v2.1/")
+
+
+def parse(body: bytes):
+    """The JSON object in an answer, past what comes before it: sholiday.faboul.se puts PHP notices
+    (HTML) in front of it. None when there is none."""
+    text = body.decode("utf-8", errors="replace")
+    try:
+        return json.JSONDecoder().raw_decode(text, text.index("{"))[0]
+    except ValueError:
+        return None
 
 
 def names_from(data) -> list[str]:
@@ -20,7 +32,7 @@ class NamnsdagModule:
     __test__ = False
 
     def __init__(self, config):
-        # The mirror adds self.render_template, self.translate and self.fetch_json after __init__.
+        # The mirror adds self.render_template, self.translate and self.fetch after __init__.
         self.config = config
         self.name = "mirrordash_namnsdag"
         self.interval = config.get("interval", 60)
@@ -30,10 +42,10 @@ class NamnsdagModule:
     async def fetch_names(self, day: date) -> list[str] | None:
         """The names for that day, or None when neither service answered."""
         for base in URLS:
-            data, error = await self.fetch_json(base + day.strftime("%Y/%m/%d"), max_age=86400)  # a day's names never change
-            if data is not None:
+            body, error = await self.fetch(base + day.strftime("%Y/%m/%d"), max_age=86400)  # a day's names never change
+            if (data := parse(body) if body is not None else None) is not None:
                 return names_from(data)
-            logger.debug(f"{base}: {error}")
+            logger.debug(f"{base}: {error or 'no JSON in the answer'}")
         return None
 
     async def run_loop(self, broadcast_func):
