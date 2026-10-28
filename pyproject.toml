@@ -3,6 +3,8 @@ name = "mirrordash-namnsdag"
 version = "1.1.1"
 description = "Swedish Name Day widget"
 requires-python = ">=3.14"
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [
     { name = "Menturan" }
 ]
