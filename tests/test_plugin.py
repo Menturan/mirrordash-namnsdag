@@ -42,12 +42,6 @@ def test_error_shown_when_both_are_down():
     m = module((None, "offline"), (None, "offline"))
     assert asyncio.run(m.fetch_names(date(2026, 10, 8))) is None
 
-    async def one_round():
-        broadcast = AsyncMock(side_effect=asyncio.CancelledError)  # stop after the first render
-        try:
-            await m.run_loop(broadcast)
-        except asyncio.CancelledError:
-            pass
     m.fetch = AsyncMock(return_value=(None, "offline"))
-    asyncio.run(one_round())
+    asyncio.run(m.render())
     assert m.render_template.call_args.kwargs["error"] is True

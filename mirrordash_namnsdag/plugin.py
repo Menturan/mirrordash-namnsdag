@@ -1,4 +1,3 @@
-import asyncio
 import json
 import logging
 from datetime import date
@@ -48,19 +47,11 @@ class NamnsdagModule:
             logger.debug(f"{base}: {error or 'no JSON in the answer'}")
         return None
 
-    async def run_loop(self, broadcast_func):
-        """Fetch once a day (and again until it works), show, wait, repeat."""
-        while True:
-            try:
-                today = date.today()
-                if self.date != today:
-                    names = await self.fetch_names(today)
-                    if names is not None:
-                        self.names, self.date = names, today
-                html = self.render_template("widget.html", names=self.names, error=self.date != today)
-                await broadcast_func(self.name, html)
-            except asyncio.CancelledError:
-                raise  # the mirror is stopping this module: let it
-            except Exception as e:
-                logger.error(f"{self.name}: {e}", exc_info=True)
-            await asyncio.sleep(self.interval)
+    async def render(self) -> str:
+        """Shown every interval: fetches once a day (and again until it works)."""
+        today = date.today()
+        if self.date != today:
+            names = await self.fetch_names(today)
+            if names is not None:
+                self.names, self.date = names, today
+        return self.render_template("widget.html", names=self.names, error=self.date != today)
