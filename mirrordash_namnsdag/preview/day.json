@@ -1,0 +1,21 @@
+{
+ "cachetid": "2026-11-02 00:00:00",
+ "version": "2.1",
+ "uri": "/dagar/v2.1/2026/11/02",
+ "startdatum": "2026-11-02",
+ "slutdatum": "2026-11-02",
+ "dagar": [
+  {
+   "datum": "2026-11-02",
+   "veckodag": "Måndag",
+   "arbetsfri dag": "Nej",
+   "röd dag": "Nej",
+   "vecka": "45",
+   "dag i vecka": "1",
+   "namnsdag": [
+    "Tobias"
+   ],
+   "flaggdag": ""
+  }
+ ]
+}
