@@ -8,7 +8,7 @@ Swedish Namnsdag (Name Day) widget for MirrorDash.
 ## Installation
 
 On the mirror's admin page, open **Modules**: the module is in the list, install it with one click.
-Or paste `git+https://github.com/Menturan/mirrordash-namnsdag.git` under **Modules → Install a Module from GitHub**.
+Or paste `git+https://github.com/Menturan/mirrordash-namnsdag.git` under **Modules → Add modules → Install from a Git URL or folder**.
 
 Developing it: `uv run pytest` runs its tests, and `uvx mirrordash-sdk validate .` checks it.
 
