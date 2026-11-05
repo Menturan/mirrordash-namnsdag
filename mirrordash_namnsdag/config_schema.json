@@ -4,17 +4,18 @@
   "description": "Displays the current name of the day in Sweden.",
   "type": "object",
   "properties": {
-    "interval": {
-      "type": "integer",
-      "default": 60,
-      "title": "Update Interval (Seconds)",
-      "description": "How often to check for a new day. The names are fetched once a day."
-    },
     "show_header": {
       "type": "boolean",
       "default": true,
       "title": "Show Header",
       "description": "Show or hide the module's header/title."
+    },
+    "interval": {
+      "type": "integer",
+      "default": 60,
+      "title": "Update Interval (Seconds)",
+      "description": "How often to check for a new day. The names are fetched once a day.",
+      "group": "Advanced"
     }
   },
   "required": ["interval", "show_header"]
