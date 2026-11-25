@@ -1,23 +1,17 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Namnsdag",
-  "requires_mirrordash": "0.13",
+  "requires_mirrordash": "0.21",
   "description": "Displays the current name of the day in Sweden.",
   "type": "object",
   "properties": {
-    "show_header": {
-      "type": "boolean",
-      "default": true,
-      "title": "Show Header",
-      "description": "Show or hide the module's header/title."
-    },
     "interval": {
       "type": "integer",
       "default": 60,
-      "title": "Update Interval (Seconds)",
+      "title": "Update interval",
       "description": "How often to check for a new day. The names are fetched once a day.",
-      "group": "Advanced"
+      "unit": "s"
     }
   },
-  "required": ["interval", "show_header"]
+  "required": ["interval"]
 }

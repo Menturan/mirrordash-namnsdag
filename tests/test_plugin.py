@@ -45,3 +45,17 @@ def test_error_shown_when_both_are_down():
     m.fetch = AsyncMock(return_value=(None, "offline"))
     asyncio.run(m.render())
     assert m.render_template.call_args.kwargs["error"] is True
+
+
+def _render_widget(**context):
+    from pathlib import Path
+    from jinja2 import Environment, FileSystemLoader
+    folder = Path(__file__).parent.parent / "mirrordash_namnsdag" / "templates"
+    template = Environment(loader=FileSystemLoader(folder)).get_template("widget.html")
+    return template.render(translations={"title": "Namnsdag"}, names=["Nils"], error=False, **context)
+
+
+def test_heading_text_replaces_the_title_and_show_header_hides_it():
+    assert "</i>Namnsdag</h2>" in _render_widget(show_header=True, heading="")
+    assert "</i>Idag firar</h2>" in _render_widget(show_header=True, heading="Idag firar")
+    assert "module-header" not in _render_widget(show_header=False, heading="")

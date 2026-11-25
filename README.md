@@ -14,7 +14,7 @@ Developing it: `uv run pytest` runs its tests, and `uvx mirrordash-sdk validate 
 
 ## Configuration
 
-This module does not require external API keys. The names come from api.dryg.net (or sholiday.faboul.se when it doesn't answer), once a day. Show or hide the header in the module's settings.
+This module does not require external API keys. The names come from api.dryg.net (or sholiday.faboul.se when it doesn't answer), once a day. Show or hide the heading, or give it your own text, under the heading settings.
 
 ## License
 [MIT](LICENSE)
